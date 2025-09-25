@@ -5,7 +5,7 @@ import {
   useGetAllDoctorAppointmentListsQuery,
   useUpdateAppointmentStatusMutation,
 } from "@/lib/services/patient/doctors.appointment.lists";
-import { Table, Tag, Button, Popconfirm, Select, Spin, message, Empty } from "antd";
+import { Table, Tag, Button, Popconfirm, Select, Spin, Empty } from "antd";
 import { toast } from "react-toastify";
 
 const { Option } = Select;
@@ -31,7 +31,7 @@ export default function AppointmentList() {
       }).unwrap();
       refetch();
       toast.success("Appointment cancelled successfully!");
-    } catch (error) {
+    } catch  {
       toast.error("Failed to cancel appointment!");
     }
   };
@@ -58,7 +58,7 @@ export default function AppointmentList() {
       dataIndex: "status",
       key: "status",
       render: (status: string) => {
-        let color =
+        const color =
           status === "PENDING"
             ? "blue"
             : status === "COMPLETED"

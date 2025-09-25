@@ -1,18 +1,15 @@
 "use client"
-import { increment, decrement, incrementByAmount } from "@/lib/features/counter/counterSlice";
+
 import { RootState } from "@/lib/store";
 import { Button, Card } from "antd";
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from "@/lib/features/login/authSlice";
+import { useSelector } from 'react-redux';
 import Link from "next/link";
-import { ArrowRight, Calendar, Shield, Star, Stethoscope, Users } from 'lucide-react';
+import { ArrowRight, Calendar, Shield, Stethoscope, Users } from 'lucide-react';
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const count = useSelector((state: RootState) => state.counter.value);
   const [userLoading, setUserLoading] = useState(true);
   const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
   useEffect(() => {
@@ -27,7 +24,7 @@ export default function Home() {
     } else {
       setUserLoading(false)
     }
-  }, [isAuthenticated, user, router]);
+  }, [isAuthenticated, user,router]);
   return (
     <div className="min-h-screen">
       {userLoading ?

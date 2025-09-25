@@ -1,8 +1,8 @@
 "use client";
 
-import { Card, Form, Input, Button, Radio, Typography, message, Divider } from "antd";
+import { Card, Form, Input, Button, Radio, Typography, Divider } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
-import { useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { loginStart, loginSuccess, loginFailure } from "@/lib/features/login/authSlice";
@@ -24,6 +24,7 @@ interface LoginFormValues {
 
 export default function Login() {
   const router = useRouter();
+
   const dispatch = useDispatch()
   const { loading, error, isAuthenticated, user } = useSelector((state: RootState) => state.auth);
   const [userLoading, setUserLoading] = useState(true);
@@ -36,7 +37,7 @@ export default function Login() {
     } else {
       setUserLoading(false)
     }
-  }, [isAuthenticated, user, router]);
+  }, [isAuthenticated, user]);
 
   const [form] = Form.useForm<LoginFormValues>();
   const onFinish = async (values: LoginFormValues) => {
@@ -44,17 +45,25 @@ export default function Login() {
     //console.log("Login Form Values:", values);
     try {
       const response = await axios.post(`${API_BASE_URL}/auth/login`, values);
-      // console.log(response.data)
+      //console.log(response.data)
       dispatch(loginSuccess({ user: response.data.data.user, token: response.data.data.token }));
-      if (response.data.data.user.role === "PATIENT") {
+
+      if (response.data.data.user.role == "PATIENT") {
         router.push("/dashboard/patient/doctors");
       } else {
         router.push("/dashboard/doctor/appointments");
       }
+      toast.success("Login successful!");
     } catch (error: any) {
-     // console.error("Login error:", error);
-      toast.error("Login failed!");
-      dispatch(loginFailure(error.response.data.message));
+      console.error("Login error:", error);
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.data?.message ||
+        error.message ||
+        "Login failed!";
+
+      toast.error(message);
+      dispatch(loginFailure(message));
     }
 
   };
@@ -79,7 +88,7 @@ export default function Login() {
             <Form.Item name="password" label="Password" rules={[{ required: true, message: "Enter password" }]}>
               <Input.Password prefix={<LockOutlined />} />
             </Form.Item>
-            <div className="text-end"><Link href="/forgot-password" className="text-end">Forgot Password?</Link></div>
+            <div className="text-end"><Link href="/" className="text-end">Forgot Password?</Link></div>
 
 
 
@@ -97,9 +106,9 @@ export default function Login() {
           </Form>
           {error && <p className="text-red-500">{error}</p>}
           <div className="text-center mt-4 flex flex-col">
-            <Link href="/register">Don't have an account? Sign Up</Link>
+            <Link href="/register">Don&lsquo;t have an account? Sign Up</Link>
             or
-            <Divider/>
+            <Divider />
 
             <Link href="/">Back To Home</Link>
           </div>

@@ -42,7 +42,7 @@ export default function DoctorList() {
       toast.success("Appointment created successfully!");
       setSelectedDoctor(null);
       setDate("");
-    } catch (error: any) {
+    } catch (error:any) {
      // console.log(error)
       toast.error(error.data.message || "Failed to create appointment");
     }
@@ -85,7 +85,7 @@ export default function DoctorList() {
 
       {/* Doctor Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 auto-rows-fr gap-6">
-        {data?.data?.map((doctor: any) => (
+        {data?.data?.map((doctor:any) => (
           <Card
             key={doctor.id}
             className="shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-xl "

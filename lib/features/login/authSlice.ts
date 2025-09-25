@@ -58,6 +58,8 @@ const authSlice = createSlice({
         loginFailure: (state, action: PayloadAction<string>) => {
             state.loading = false;
             state.error = action.payload;
+            Cookies.remove("user");  // ensure no bad user cookie remains
+            Cookies.remove("token");
         },
         logout: (state) => {
             state.user = null;

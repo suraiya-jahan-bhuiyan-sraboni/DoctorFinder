@@ -1,9 +1,8 @@
 "use client"
 import { RootState } from "@/lib/store";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Link from "next/link";
 import { ClipboardClock, Stethoscope, UserSearch } from 'lucide-react';
 import { Button } from "antd";
 import { logout } from "@/lib/features/login/authSlice";
@@ -27,7 +26,7 @@ export default function PatientLayout({ children }: { children: React.ReactNode 
       router.push("/login");
       //setUserLoading(false);
     }
-  }, [isAuthenticated, user, router]);
+  }, [isAuthenticated, user]);
 
   if (userLoading) return <div className="text-center pt-50">Loading...</div>;
   return (

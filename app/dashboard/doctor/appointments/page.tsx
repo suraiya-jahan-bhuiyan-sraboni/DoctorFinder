@@ -50,7 +50,7 @@ export default function AppointmentList() {
         status: selectedAppointment.newStatus,
       }).unwrap();
       toast.success(`Appointment Status Updated!`);
-    } catch (err) {
+    } catch {
       toast.error("Failed to update status");
     }
     setModalOpen(false);
@@ -85,7 +85,7 @@ export default function AppointmentList() {
       dataIndex: "status",
       key: "status",
       render: (status: string) => {
-        let color =
+        const color =
           status === "PENDING"
             ? "orange"
             : status === "COMPLETED"
@@ -98,7 +98,7 @@ export default function AppointmentList() {
       title: "Actions",
       key: "actions",
       render: (_, record) => {
-        let color =
+        const color =
           record.status === "PENDING"
             ? "orange"
             : record.status === "COMPLETED"
